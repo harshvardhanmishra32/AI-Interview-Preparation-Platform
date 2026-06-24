@@ -1,0 +1,666 @@
+/* ============================================================
+   PREPAI Enterprise Design System
+   Inspired by: Stripe, Linear, Vercel, GitHub
+   Clean, Minimal, Enterprise-Grade
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ─── Base Reset ────────────────────────────────────────── */
+.stApp {
+    background-color: var(--bg) !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    color: var(--text) !important;
+}
+
+/* ─── Content Container ──────────────────────────────────── */
+div[data-testid="stAppViewBlockContainer"] {
+    padding-top: 1.75rem !important;
+    padding-bottom: 2.5rem !important;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+@media (max-width: 768px) {
+    div[data-testid="stAppViewBlockContainer"] {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        padding-top: 1rem !important;
+    }
+}
+
+/* ─── Sidebar ────────────────────────────────────────────── */
+section[data-testid="stSidebar"] {
+    background-color: var(--sidebar-bg) !important;
+    border-right: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+section[data-testid="stSidebar"] > div:first-child {
+    background-color: var(--sidebar-bg) !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarHeader"],
+section[data-testid="stSidebar"] [data-testid="stLogoSpacer"],
+section[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarNav"],
+section[data-testid="stSidebar"] [data-testid="stSidebarNavItems"],
+section[data-testid="stSidebar"] nav {
+    display: none !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"],
+section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Sidebar nav buttons */
+section[data-testid="stSidebar"] div.stButton > button {
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 7px 12px !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    transition: all 120ms ease !important;
+    letter-spacing: 0 !important;
+}
+
+section[data-testid="stSidebar"] div.stButton > button p {
+    color: inherit !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+section[data-testid="stSidebar"] div.stButton > button:hover {
+    background: rgba(255,255,255,0.05) !important;
+    color: var(--text) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ─── Cards / Bordered Containers ───────────────────────── */
+div[data-testid="stVerticalBlockBorderWrapper"],
+div[data-testid="stForm"] {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    box-shadow: var(--shadow) !important;
+    margin-bottom: 16px !important;
+    transition: border-color 150ms ease !important;
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    border-color: rgba(255,255,255,0.12) !important;
+    box-shadow: var(--shadow-md) !important;
+    transform: none !important;
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+h1 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--text) !important;
+    letter-spacing: 0 !important;
+    line-height: 1.3 !important;
+    margin: 0 0 4px 0 !important;
+}
+
+h2 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: var(--text) !important;
+    letter-spacing: 0 !important;
+    line-height: 1.4 !important;
+}
+
+h3 {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: var(--text) !important;
+    line-height: 1.5 !important;
+}
+
+h1 a,
+h2 a,
+h3 a {
+    display: none !important;
+}
+
+p, div, span, li, label {
+    font-family: 'Inter', sans-serif !important;
+    color: var(--text-muted) !important;
+    line-height: 1.6 !important;
+}
+
+/* ─── Metrics ────────────────────────────────────────────── */
+[data-testid="stMetricValue"] {
+    font-size: 1.875rem !important;
+    font-weight: 700 !important;
+    color: var(--text) !important;
+    letter-spacing: -0.02em !important;
+}
+
+[data-testid="stMetricLabel"] {
+    color: var(--text-faint) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+[data-testid="stMetricDelta"] {
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+div.stButton > button {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 8px 18px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    transition: all 120ms ease !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+    min-width: 100px !important;
+    width: auto !important;
+}
+
+div.stButton > button * {
+    color: #ffffff !important;
+}
+
+div.stButton > button:hover {
+    background: var(--primary-dark) !important;
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4) !important;
+    opacity: 1 !important;
+}
+
+div.stButton > button:active {
+    transform: scale(0.99) !important;
+}
+
+/* ─── Inputs ──────────────────────────────────────────────── */
+div[data-baseweb="input"] input,
+div[data-baseweb="textarea"] textarea,
+div[data-baseweb="select"] div {
+    background-color: var(--bg) !important;
+    border: 1px solid var(--border-solid) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--text) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.875rem !important;
+    transition: border-color 120ms ease !important;
+}
+
+div[data-baseweb="input"]:focus-within input,
+div[data-baseweb="textarea"]:focus-within textarea {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Input labels */
+div[data-testid="stTextInput"] label,
+div[data-testid="stTextArea"] label,
+div[data-testid="stSelectbox"] label,
+div[data-testid="stNumberInput"] label {
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 4px !important;
+}
+
+/* ─── Selectbox ───────────────────────────────────────────── */
+div[data-baseweb="select"] {
+    background-color: var(--bg) !important;
+}
+
+/* ─── Tabs ─────────────────────────────────────────────────── */
+div[data-testid="stTabs"] button {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: var(--text-muted) !important;
+    border-bottom: 2px solid transparent !important;
+    background: transparent !important;
+    padding: 8px 16px !important;
+    transition: color 120ms ease, border-color 120ms ease !important;
+    box-shadow: none !important;
+    min-width: auto !important;
+}
+
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: var(--text) !important;
+    border-bottom-color: var(--primary) !important;
+    background: transparent !important;
+}
+
+/* ─── Progress Bar ────────────────────────────────────────── */
+div[data-testid="stProgressBar"] > div > div {
+    background: var(--primary) !important;
+    border-radius: 4px !important;
+}
+
+div[data-testid="stProgressBar"] > div {
+    background: var(--border-solid) !important;
+    border-radius: 4px !important;
+}
+
+/* ─── Spinners ────────────────────────────────────────────── */
+div[data-testid="stSpinner"] > div {
+    border-top-color: var(--primary) !important;
+}
+
+/* ─── Badges ──────────────────────────────────────────────── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+    margin: 2px;
+}
+
+.badge-blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60A5FA;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.badge-green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ADE80;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.badge-red {
+    background: rgba(239, 68, 68, 0.12);
+    color: #F87171;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.badge-amber {
+    background: rgba(245, 158, 11, 0.12);
+    color: #FBBF24;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.badge-purple {
+    background: rgba(139, 92, 246, 0.12);
+    color: #A78BFA;
+    border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+/* Legacy badge class aliases */
+.badge-primary  { background: rgba(59,130,246,0.15); color: #60A5FA; border: 1px solid rgba(59,130,246,0.25); }
+.badge-success  { background: rgba(34,197,94,0.12); color: #4ADE80; border: 1px solid rgba(34,197,94,0.25); }
+.badge-warning  { background: rgba(245,158,11,0.12); color: #FBBF24; border: 1px solid rgba(245,158,11,0.25); }
+.badge-danger   { background: rgba(239,68,68,0.12); color: #F87171; border: 1px solid rgba(239,68,68,0.25); }
+
+/* ─── Alert / Info Boxes ──────────────────────────────────── */
+.alert {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    margin: 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.alert-info    { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); color: #93C5FD; }
+.alert-success { background: rgba(34,197,94,0.1);  border: 1px solid rgba(34,197,94,0.2);  color: #86EFAC; }
+.alert-warning { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); color: #FDE68A; }
+.alert-error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.2);  color: #FCA5A5; }
+
+/* ─── KPI / Stat Cards ────────────────────────────────────── */
+.kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.kpi-blue { border-top: 2px solid var(--primary); }
+.kpi-green { border-top: 2px solid var(--success); }
+.kpi-amber { border-top: 2px solid var(--warning); }
+.kpi-red { border-top: 2px solid var(--error); }
+.kpi-purple { border-top: 2px solid #6366F1; }
+
+.kpi-card:hover {
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: var(--shadow-md);
+}
+
+.kpi-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.kpi-sub {
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+    margin-top: 6px;
+}
+
+/* ─── Divider ─────────────────────────────────────────────── */
+.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+}
+
+/* ─── Table ───────────────────────────────────────────────── */
+div[data-testid="stDataFrame"] table {
+    background: var(--bg-card) !important;
+    border-collapse: collapse !important;
+}
+
+div[data-testid="stDataFrame"] th {
+    background: var(--bg) !important;
+    color: var(--text-faint) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    padding: 10px 16px !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+div[data-testid="stDataFrame"] td {
+    color: var(--text-muted) !important;
+    font-size: 0.875rem !important;
+    padding: 10px 16px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ─── Hide default Streamlit chrome ──────────────────────── */
+#MainMenu { visibility: hidden; }
+footer    { visibility: hidden; }
+header    { visibility: hidden; }
+
+/* ─── Streamlit alert overrides ──────────────────────────── */
+div[data-testid="stAlert"] {
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.875rem !important;
+}
+
+/* ─── Expander ────────────────────────────────────────────── */
+div[data-testid="stExpander"] summary {
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    color: var(--text-muted) !important;
+}
+
+div[data-testid="stExpander"] {
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    background: var(--bg-card) !important;
+    margin-bottom: 10px !important;
+    overflow: hidden !important;
+}
+
+div[data-testid="stExpander"] summary {
+    min-height: 44px !important;
+    padding: 10px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+div[data-testid="stExpander"] details,
+div[data-testid="stExpander"] details[open],
+div[data-testid="stExpander"] details[open] summary,
+div[data-testid="stExpander"] summary:focus,
+div[data-testid="stExpander"] summary:focus-visible {
+    border-color: var(--border) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+div[data-testid="stExpander"]:focus-within {
+    border-color: rgba(37, 99, 235, 0.35) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08) !important;
+}
+
+div[data-testid="stExpander"] summary [data-testid="stIconMaterial"] {
+    display: none !important;
+}
+
+div[data-testid="stExpander"] summary p {
+    margin: 0 !important;
+    color: var(--text) !important;
+    font-size: 0.92rem !important;
+    font-weight: 650 !important;
+    line-height: 1.35 !important;
+}
+
+div[data-testid="stExpander"] div[data-testid="stExpanderDetails"] {
+    padding: 12px 16px 16px 16px !important;
+    border-top: 1px solid var(--border) !important;
+    background: var(--bg-card) !important;
+}
+
+div[data-testid="stExpander"] div[data-testid="stExpanderDetails"] p {
+    margin: 0 0 2px 0 !important;
+    color: var(--text-muted) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+}
+
+/* ─── Plotly charts dark theme fix ───────────────────────── */
+div[data-testid="stPlotlyChart"] {
+    border-radius: var(--radius) !important;
+    overflow: hidden !important;
+}
+
+/* ─── Utility helpers (used inline via class attr) ────────── */
+.text-primary   { color: var(--text) !important; }
+.text-muted     { color: var(--text-muted) !important; }
+.text-faint     { color: var(--text-faint) !important; }
+.text-blue      { color: var(--primary) !important; }
+.text-green     { color: var(--success) !important; }
+.text-red       { color: var(--error) !important; }
+.text-amber     { color: var(--warning) !important; }
+.fw-600         { font-weight: 600 !important; }
+.fw-700         { font-weight: 700 !important; }
+.fs-sm          { font-size: 0.8125rem !important; }
+.fs-xs          { font-size: 0.75rem !important; }
+
+/* ─── Product Shell Helpers ─────────────────────────────── */
+.page-header {
+    margin: 0 0 24px 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-header h1 {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    color: var(--text) !important;
+}
+
+.page-header p {
+    max-width: 760px;
+    margin: 8px 0 0 0 !important;
+    color: var(--text-muted) !important;
+    font-size: 0.95rem !important;
+}
+
+.page-eyebrow {
+    color: var(--primary) !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.app-breadcrumb {
+    color: var(--text-faint) !important;
+    font-size: 0.78rem;
+    margin: 0 0 14px 0;
+}
+
+.app-breadcrumb strong {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.section-title {
+    margin: 0 0 16px 0;
+}
+
+.section-title h3 {
+    margin: 0 !important;
+    font-size: 1rem !important;
+    font-weight: 650 !important;
+    color: var(--text) !important;
+}
+
+.section-title p {
+    margin: 4px 0 0 0 !important;
+    font-size: 0.82rem !important;
+    color: var(--text-muted) !important;
+}
+
+.surface-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.landing-hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 52%, rgba(37, 99, 235, 0.92) 100%);
+    padding: 44px 32px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+.landing-hero h1,
+.landing-hero p,
+.landing-hero div,
+.landing-hero span {
+    color: #F8FAFC !important;
+}
+
+.landing-hero .page-eyebrow {
+    color: #93C5FD !important;
+}
+
+.landing-hero .hero-muted {
+    color: #CBD5E1 !important;
+}
+
+.product-preview {
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.96);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.28);
+    padding: 16px;
+}
+
+.product-preview,
+.product-preview div,
+.product-preview span {
+    color: #0F172A !important;
+}
+
+.preview-topbar {
+    height: 10px;
+    width: 100%;
+    border-radius: 999px;
+    background: #E2E8F0;
+}
+
+.mini-chart {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: end;
+    gap: 6px;
+    height: 92px;
+    padding: 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: #F8FAFC;
+}
+
+.mini-chart span {
+    display: block;
+    border-radius: 4px 4px 0 0;
+    background: #2563EB;
+}
+
+.preview-row {
+    height: 10px;
+    border-radius: 999px;
+    background: var(--border);
+    margin-bottom: 10px;
+}
+
+.preview-row.primary { background: rgba(37, 99, 235, 0.35); width: 78%; }
+.preview-row.success { background: rgba(34, 197, 94, 0.35); width: 62%; }
+.preview-row.warn { background: rgba(245, 158, 11, 0.35); width: 48%; }
+
+@media (max-width: 900px) {
+    .landing-hero {
+        padding: 36px 20px 24px 20px;
+    }
+    .page-header h1 {
+        font-size: 1.55rem !important;
+    }
+}
