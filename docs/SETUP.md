@@ -37,7 +37,7 @@ venv\Scripts\activate
 ## 📦 Step 3: Install Dependencies
 Install all package packages in the activated environment:
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-local.txt
 ```
 
 ---

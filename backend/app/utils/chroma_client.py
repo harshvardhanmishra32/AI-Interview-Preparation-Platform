@@ -1,13 +1,19 @@
 """ChromaDB persistent client integration for storing and querying resume embeddings."""
 from pathlib import Path
-import chromadb
 from app.core.config import settings
+
+try:
+    import chromadb
+except ImportError:  # ChromaDB is optional for lightweight serverless deployments.
+    chromadb = None
 
 # Global client cache
 _chroma_client = None
 
-def get_chroma_client() -> chromadb.PersistentClient:
+def get_chroma_client():
     """Initialize or return the persistent ChromaDB client."""
+    if chromadb is None:
+        raise RuntimeError("ChromaDB is not installed in this deployment.")
     global _chroma_client
     if _chroma_client is None:
         # Create persistent path directory
@@ -25,6 +31,8 @@ def get_or_create_collection(name: str):
 
 def add_resume_embeddings(user_id: int, resume_text: str, metadata: dict) -> None:
     """Add or update a candidate's resume embeddings in ChromaDB."""
+    if chromadb is None:
+        return
     collection = get_or_create_collection("resumes")
     # Cast user_id to string for ChromaDB ID requirements
     doc_id = str(user_id)
@@ -37,6 +45,8 @@ def add_resume_embeddings(user_id: int, resume_text: str, metadata: dict) -> Non
 
 def query_similar_resumes(query_text: str, n_results: int = 5) -> list[dict]:
     """Query ChromaDB for resumes similar to query_text."""
+    if chromadb is None:
+        return []
     collection = get_or_create_collection("resumes")
     results = collection.query(
         query_texts=[query_text],

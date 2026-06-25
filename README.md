@@ -123,7 +123,7 @@ venv\Scripts\activate
 
 ### 2. Install Dependencies:
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-local.txt
 ```
 
 ### 3. Setup Configuration:
