@@ -2,6 +2,7 @@
 from contextlib import asynccontextmanager
 from time import monotonic
 from pathlib import Path
+from urllib.parse import urlsplit, urlunsplit
 import sys
 
 BACKEND_DIR = Path(__file__).resolve().parent
@@ -21,6 +22,38 @@ from app.api.interview import router as interview_router
 from app.api.analytics import router as analytics_router
 from app.api.github import router as github_router
 from app.api.career import router as career_router
+
+PROJECT_FRONTEND_ORIGINS = (
+    "https://ai-interview-preparation-platform-amber.vercel.app",
+)
+
+
+def _normalize_origin(origin: str) -> str | None:
+    """Normalize copy/pasted frontend origins for exact CORS matching."""
+    value = origin.strip().rstrip("/")
+    if not value:
+        return None
+
+    parsed = urlsplit(value)
+    if not parsed.scheme or not parsed.netloc:
+        return value.rstrip(".")
+
+    hostname = parsed.hostname.rstrip(".") if parsed.hostname else ""
+    port = f":{parsed.port}" if parsed.port else ""
+    return urlunsplit((parsed.scheme, f"{hostname}{port}", "", "", ""))
+
+
+def get_cors_origins() -> list[str]:
+    origins: list[str] = []
+    seen: set[str] = set()
+
+    for origin in (*settings.FRONTEND_ORIGINS.split(","), *PROJECT_FRONTEND_ORIGINS):
+        normalized = _normalize_origin(origin)
+        if normalized and normalized not in seen:
+            origins.append(normalized)
+            seen.add(normalized)
+
+    return origins
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -43,7 +76,7 @@ app = FastAPI(
 # CORS middleware — explicit origins required when allow_credentials=True
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origin.strip() for origin in settings.FRONTEND_ORIGINS.split(",") if origin.strip()],
+    allow_origins=get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
