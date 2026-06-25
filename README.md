@@ -106,6 +106,10 @@ ai-interview-preparation-assistant/
 
 ## 🚀 Setup and Run
 
+### Deploy API on Vercel
+
+This repository includes a Vercel adapter for the FastAPI backend. See [docs/VERCEL.md](docs/VERCEL.md) for setup, environment variables, and the Streamlit frontend hosting note.
+
 ### 1. Set Up Virtual Environment:
 ```bash
 # Mac/Linux
