@@ -110,6 +110,10 @@ ai-interview-preparation-assistant/
 
 This repository includes a Vercel adapter for the FastAPI backend. See [docs/VERCEL.md](docs/VERCEL.md) for setup, environment variables, and the Streamlit frontend hosting note.
 
+### Deploy Frontend on Vercel + Backend on Render
+
+Use the Next.js frontend in `frontend-next/` for Vercel and the FastAPI backend on Render. See [docs/FRONTEND_NEXT_DEPLOYMENT.md](docs/FRONTEND_NEXT_DEPLOYMENT.md).
+
 ### 1. Set Up Virtual Environment:
 ```bash
 # Mac/Linux
