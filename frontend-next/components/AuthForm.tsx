@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
+import { warmBackend } from "@/lib/api";
 import { Brand } from "./Brand";
 
 const roles = [
@@ -23,6 +24,22 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  const [backendReady, setBackendReady] = useState(false);
+  const [backendChecking, setBackendChecking] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    warmBackend().then((ready) => {
+      if (!active) return;
+      setBackendReady(ready);
+      setBackendChecking(false);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,43 +47,53 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
     setSuccess("");
     setLoading(true);
 
-    const form = new FormData(event.currentTarget);
-    if (mode === "login") {
-      const result = await auth.login(String(form.get("email")), String(form.get("password")), form.get("remember") === "on");
-      setLoading(false);
-      if (!result.ok) {
-        setError(result.error || "Login failed.");
+    try {
+      const form = new FormData(event.currentTarget);
+      if (mode === "login") {
+        const result = await auth.login(String(form.get("email")), String(form.get("password")), form.get("remember") === "on");
+        if (!result.ok) {
+          setError(result.error || "Login failed.");
+          return;
+        }
+        router.push("/dashboard");
         return;
       }
-      router.push("/dashboard");
-      return;
-    }
 
-    const password = String(form.get("password"));
-    const confirmPassword = String(form.get("confirmPassword"));
-    if (password !== confirmPassword) {
+      const password = String(form.get("password"));
+      const confirmPassword = String(form.get("confirmPassword"));
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+
+      const result = await auth.register({
+        name: String(form.get("name")),
+        email: String(form.get("email")),
+        password,
+        education: String(form.get("education")),
+        target_role: String(form.get("targetRole"))
+      });
+      if (!result.ok) {
+        setError(result.error || "Registration failed.");
+        return;
+      }
+      setSuccess("Account created. Please log in.");
+      router.push("/login");
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      setError("Passwords do not match.");
-      return;
     }
-
-    const result = await auth.register({
-      name: String(form.get("name")),
-      email: String(form.get("email")),
-      password,
-      education: String(form.get("education")),
-      target_role: String(form.get("targetRole"))
-    });
-    setLoading(false);
-    if (!result.ok) {
-      setError(result.error || "Registration failed.");
-      return;
-    }
-    setSuccess("Account created. Please log in.");
-    router.push("/login");
   }
 
   const isRegister = mode === "register";
+  const submitLabel = loading
+    ? isRegister
+      ? "Creating account..."
+      : "Signing in..."
+    : isRegister
+      ? "Create Free Account"
+      : "Access Workspace";
 
   return (
     <main className="page public-shell">
@@ -93,6 +120,12 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
         <form className="card stack" onSubmit={handleSubmit}>
           {error ? <div className="alert error">{error}</div> : null}
           {success ? <div className="alert success">{success}</div> : null}
+          {backendChecking ? (
+            <div className="alert">Connecting securely to the backend...</div>
+          ) : null}
+          {!backendChecking && !backendReady ? (
+            <div className="alert error">The backend is waking up. Submit again in a few seconds if the first attempt is slow.</div>
+          ) : null}
           {isRegister ? (
             <>
               <div className="field">
@@ -133,7 +166,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             </label>
           )}
           <button className="button full" disabled={loading} type="submit">
-            {loading ? "Please wait..." : isRegister ? "Create Free Account" : "Access Workspace"}
+            {submitLabel}
           </button>
         </form>
       </section>

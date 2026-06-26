@@ -1,5 +1,9 @@
 export type ApiResult<T> = { ok: true; data: T } | { ok: false; error: string };
 
+type ApiRequestOptions = RequestInit & {
+  timeoutMs?: number;
+};
+
 export type UserProfile = {
   id: number;
   name: string;
@@ -129,20 +133,30 @@ async function parseError(response: Response, fallback: string): Promise<string>
 
 export async function apiRequest<T>(
   path: string,
-  options: RequestInit = {},
+  options: ApiRequestOptions = {},
   token?: string | null
 ): Promise<ApiResult<T>> {
+  const { timeoutMs = 45000, signal, ...requestOptions } = options;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  if (signal) {
+    if (signal.aborted) controller.abort();
+    signal.addEventListener("abort", () => controller.abort(), { once: true });
+  }
+
   try {
-    const headers = new Headers(options.headers);
-    if (!(options.body instanceof FormData) && !headers.has("Content-Type")) {
+    const headers = new Headers(requestOptions.headers);
+    if (!(requestOptions.body instanceof FormData) && !headers.has("Content-Type")) {
       headers.set("Content-Type", "application/json");
     }
     if (token) headers.set("Authorization", `Bearer ${token}`);
 
     const response = await fetch(`${API_URL}${path}`, {
-      ...options,
+      ...requestOptions,
       headers,
-      cache: "no-store"
+      cache: "no-store",
+      signal: controller.signal
     });
 
     if (!response.ok) {
@@ -150,8 +164,30 @@ export async function apiRequest<T>(
     }
 
     return { ok: true, data: (await response.json()) as T };
-  } catch {
+  } catch (error) {
+    if (error instanceof DOMException && error.name === "AbortError") {
+      return { ok: false, error: "The backend is taking too long to respond. Please try again in a moment." };
+    }
     return { ok: false, error: "Cannot reach the backend. Check the Render API URL." };
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+export async function warmBackend(): Promise<boolean> {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const response = await fetch(`${API_URL}/health`, {
+      cache: "no-store",
+      signal: controller.signal
+    });
+    return response.ok;
+  } catch {
+    return false;
+  } finally {
+    window.clearTimeout(timeout);
   }
 }
 
@@ -160,4 +196,3 @@ export async function uploadResume(file: File, token: string): Promise<ApiResult
   formData.append("file", file);
   return apiRequest<ResumeAnalysis>("/api/resume/upload-resume", { method: "POST", body: formData }, token);
 }
-

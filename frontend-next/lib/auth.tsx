@@ -62,7 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function login(email: string, password: string, rememberMe: boolean) {
     const result = await apiRequest<TokenResponse>("/api/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password, remember_me: rememberMe })
+      body: JSON.stringify({ email, password, remember_me: rememberMe }),
+      timeoutMs: 15000
     });
 
     if (!result.ok) return { ok: false, error: result.error };
@@ -82,7 +83,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function register(payload: RegisterPayload) {
     const result = await apiRequest<UserProfile>("/api/auth/register", {
       method: "POST",
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      timeoutMs: 20000
     });
     if (!result.ok) return { ok: false, error: result.error };
     return { ok: true };

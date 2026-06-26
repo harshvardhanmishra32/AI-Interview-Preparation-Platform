@@ -375,10 +375,14 @@ button {
 }
 
 .alert {
+  border: 1px solid #bfdbfe;
   border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
   padding: 12px 14px;
   font-size: 0.9rem;
   font-weight: 650;
+  line-height: 1.45;
 }
 
 .alert.error {
